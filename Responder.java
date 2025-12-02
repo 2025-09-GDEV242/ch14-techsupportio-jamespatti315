@@ -25,6 +25,9 @@ public class Responder
     private ArrayList<String> defaultResponses;
     // The name of the file containing the default responses.
     private static final String FILE_OF_DEFAULT_RESPONSES = "default.txt";
+    
+    //OK LETS ADD NEW RESPONSES.
+    private static final String FILE_OF_NEW_RESPONSES = "responses.txt";
     private Random randomGenerator;
 
     /**
@@ -127,7 +130,8 @@ public class Responder
     private void fillDefaultResponses()
     {
         Charset charset = Charset.forName("US-ASCII");
-        Path path = Paths.get(FILE_OF_DEFAULT_RESPONSES);
+        //Path path = Paths.get(FILE_OF_DEFAULT_RESPONSES);
+        Path path = Paths.get(FILE_OF_NEW_RESPONSES);
         try (BufferedReader reader = Files.newBufferedReader(path, charset)) {
             String response = reader.readLine();
             while(response != null) {
@@ -136,14 +140,15 @@ public class Responder
             }
         }
         catch(FileNotFoundException e) {
-            System.err.println("Unable to open " + FILE_OF_DEFAULT_RESPONSES);
+            System.err.println("Unable to open " + FILE_OF_NEW_RESPONSES);
         }
         catch(IOException e) {
             System.err.println("A problem was encountered reading " +
-                               FILE_OF_DEFAULT_RESPONSES);
+                               FILE_OF_NEW_RESPONSES);
         }
         
-        //here we can make the catch for multiple blank lines. 
+       
+        
         // Make sure we have at least one response.
         if(defaultResponses.size() == 0) {
             defaultResponses.add("Could you elaborate on that?");
