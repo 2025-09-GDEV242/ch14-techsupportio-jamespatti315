@@ -27,3 +27,33 @@ Then start describing your problem by typing in the terminal window.
 
 The purpose of this project is to demonstrate and study library classes, such 
 as ArrayList, HashMap, HashSet, and Random.
+
+
+ok James Patti
+
+1. change the  fillDefaultResponses method to read the new format of the repsonses.txt file. 
+
+lines of text get appended if they appear on the next consecutive line. 
+
+A blank line marks the end of the response.
+
+ie. 
+
+
+
+
+2  
+
+. Change the method that populates the response hash map fillResponseMap to read from the file. responses.txt 
+
+ 
+
+The file format is a comma separated list of values (or single value) for key for the responses, any number of lines that are non blank constitute the response. A blank line indicates the end of a key, value pair.  Write your file reading code to your specifications and test 
+
+ie
+
+crash, crashes
+Well, it never crashes on our system. It must have something
+to do with your system. Tell me more about your configuration.
+
+ 

@@ -118,6 +118,11 @@ public class Responder
     /**
      * Build up a list of default responses from which we can pick
      * if we don't know what else to say.
+     * 
+     * ok need to changeit to read the new text file. check if 3 blank lines
+     * checked exception  for this.
+     * 
+     * 
      */
     private void fillDefaultResponses()
     {
@@ -137,6 +142,8 @@ public class Responder
             System.err.println("A problem was encountered reading " +
                                FILE_OF_DEFAULT_RESPONSES);
         }
+        
+        //here we can make the catch for multiple blank lines. 
         // Make sure we have at least one response.
         if(defaultResponses.size() == 0) {
             defaultResponses.add("Could you elaborate on that?");
