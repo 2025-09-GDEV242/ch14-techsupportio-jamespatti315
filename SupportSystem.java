@@ -13,6 +13,10 @@ import java.util.HashSet;
  * 
  * @author David J. Barnes and Michael Kölling.
  * @version 2016.02.29
+ * @new Author James Patti
+ * @Version  additional error throws.
+ * 
+ * 
  */
 public class SupportSystem
 {

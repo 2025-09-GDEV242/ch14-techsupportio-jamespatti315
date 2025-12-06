@@ -16,6 +16,13 @@ import java.util.*;
  * 
  * @author David J. Barnes and Michael Kölling.
  * @version 2016.02.29
+ * 
+ * @ new Author James Patti
+ * 
+ * goals created a checked exception for 2 or more blank lines,
+ * 
+ * 
+ * @Version 12/8/25
  */
 public class Responder
 {
@@ -33,7 +40,7 @@ public class Responder
     /**
      * Construct a Responder
      */
-    public Responder()
+    public Responder() throws BlankLinesException
     {
         responseMap = new HashMap<>();
         defaultResponses = new ArrayList<>();
@@ -127,7 +134,7 @@ public class Responder
      * 
      * 
      */
-    private void fillDefaultResponses()
+    private void fillDefaultResponses() throws BlankLinesException
     {
         Charset charset = Charset.forName("US-ASCII");
         //Path path = Paths.get(FILE_OF_DEFAULT_RESPONSES);
