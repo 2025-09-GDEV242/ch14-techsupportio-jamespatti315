@@ -132,6 +132,7 @@ public class Responder
      * ok need to changeit to read the new text file. check if 3 blank lines
      * checked exception  for this.
      * 
+     * @throws: thrwos a exception under the condition of 2 or more blank lines in a text,
      * 
      */
     private void fillDefaultResponses() throws BlankLinesException
@@ -139,9 +140,31 @@ public class Responder
         Charset charset = Charset.forName("US-ASCII");
         //Path path = Paths.get(FILE_OF_DEFAULT_RESPONSES);
         Path path = Paths.get(FILE_OF_NEW_RESPONSES);
+        //ok here thr try, we can now set up a detector for blank lines
+        
+        int blankLines = 0; //the count for lines, more then  2 we need to use the throw!
+        
         try (BufferedReader reader = Files.newBufferedReader(path, charset)) {
             String response = reader.readLine();
             while(response != null) {
+                
+                //ok here  will be the counter
+                if(response.trim().isEmpty()){
+                    blankLines++;
+                }
+                else{
+                    blankLines = 0;
+                    defaultResponses.add(response);
+                }
+                
+                //The actual code to start this 
+                if(blankLines > 2){
+                throw new BlankLinesException(
+                "File contains not enough words"
+                );
+            }
+                
+                
                 defaultResponses.add(response);
                 response = reader.readLine();
             }
