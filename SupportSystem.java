@@ -29,7 +29,13 @@ public class SupportSystem
     public SupportSystem()
     {
         reader = new InputReader();
+        try {
         responder = new Responder();
+    }
+        catch(BlankLinesException e) {
+            System.err.println("Error has occured loading default responses.");
+            responder = null;
+        }
     }
 
     /**

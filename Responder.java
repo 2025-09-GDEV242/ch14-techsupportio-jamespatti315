@@ -74,55 +74,60 @@ public class Responder
     /**
      * Enter all the known keywords and their associated responses
      * into our response map.
+     * 
+     * ok changes this so that is handles and populates with new responses? I literally don't get this?
+     * get first word the key but what the  is any of this?
+     * 
+     * ok slowly finally getting this, its now hard codes but we want to read like in past method.. feel like could just reuse code.
      */
     private void fillResponseMap()
     {
-        responseMap.put("crash", 
-                        "Well, it never crashes on our system. It must have something\n" +
-                        "to do with your system. Tell me more about your configuration.");
-        responseMap.put("crashes", 
-                        "Well, it never crashes on our system. It must have something\n" +
-                        "to do with your system. Tell me more about your configuration.");
-        responseMap.put("slow", 
-                        "I think this has to do with your hardware. Upgrading your processor\n" +
-                        "should solve all performance problems. Have you got a problem with\n" +
-                        "our software?");
-        responseMap.put("performance", 
-                        "Performance was quite adequate in all our tests. Are you running\n" +
-                        "any other processes in the background?");
-        responseMap.put("bug", 
-                        "Well, you know, all software has some bugs. But our software engineers\n" +
-                        "are working very hard to fix them. Can you describe the problem a bit\n" +
-                        "further?");
-        responseMap.put("buggy", 
-                        "Well, you know, all software has some bugs. But our software engineers\n" +
-                        "are working very hard to fix them. Can you describe the problem a bit\n" +
-                        "further?");
-        responseMap.put("windows", 
-                        "This is a known bug to do with the Windows operating system. Please\n" +
-                        "report it to Microsoft. There is nothing we can do about this.");
-        responseMap.put("macintosh", 
-                        "This is a known bug to do with the Mac operating system. Please\n" +
-                        "report it to Apple. There is nothing we can do about this.");
-        responseMap.put("expensive", 
-                        "The cost of our product is quite competitive. Have you looked around\n" +
-                        "and really compared our features?");
-        responseMap.put("installation", 
-                        "The installation is really quite straight forward. We have tons of\n" +
-                        "wizards that do all the work for you. Have you read the installation\n" +
-                        "instructions?");
-        responseMap.put("memory", 
-                        "If you read the system requirements carefully, you will see that the\n" +
-                        "specified memory requirements are 1.5 giga byte. You really should\n" +
-                        "upgrade your memory. Anything else you want to know?");
-        responseMap.put("linux", 
-                        "We take Linux support very seriously. But there are some problems.\n" +
-                        "Most have to do with incompatible glibc versions. Can you be a bit\n" +
-                        "more precise?");
-        responseMap.put("bluej", 
-                        "Ahhh, BlueJ, yes. We tried to buy out those guys long ago, but\n" +
-                        "they simply won't sell... Stubborn people they are. Nothing we can\n" +
-                        "do about it, I'm afraid.");
+        
+        Charset charset = Charset.forName("US-ASCII");
+        
+        Path path = Paths.get(FILE_OF_NEW_RESPONSES);
+        
+        try (BufferedReader reader = Files.newBufferedReader(path, charset)){
+        //using book two strings
+        String keyword;
+        String response;
+        
+        while(true) {
+            //read keyword
+            keyword = reader.readLine();
+            if (keyword == null){
+                break; //end before breaks
+            }
+            
+            keyword = keyword.trim();
+            if(keyword.isEmpty()){
+                continue;
+            }
+            
+            //read the response pairs, 
+            response = reader.readLine();
+             
+            response = response.trim();
+            
+            responseMap.put(keyword,response);
+        }
+        
+     }
+     
+     catch(FileNotFoundException e) {
+            System.err.println("Unable to open " + FILE_OF_NEW_RESPONSES);
+        }
+        catch(IOException e) {
+            System.err.println("A problem was encountered reading " +
+                               FILE_OF_NEW_RESPONSES);
+        }
+     
+     // Make sure we have at least one response.
+        if(defaultResponses.size() == 0) {
+            defaultResponses.add("Could you elaborate on that?");
+        }
+     
+     
     }
 
     /**
@@ -138,15 +143,15 @@ public class Responder
     private void fillDefaultResponses() throws BlankLinesException
     {
         Charset charset = Charset.forName("US-ASCII");
-        //Path path = Paths.get(FILE_OF_DEFAULT_RESPONSES);
+       // Path path = Paths.get(FILE_OF_DEFAULT_RESPONSES);
         Path path = Paths.get(FILE_OF_NEW_RESPONSES);
         //ok here thr try, we can now set up a detector for blank lines
         
         int blankLines = 0; //the count for lines, more then  2 we need to use the throw!
         
         try (BufferedReader reader = Files.newBufferedReader(path, charset)) {
-            String response = reader.readLine();
-            while(response != null) {
+            String response;
+            while((response = reader.readLine()) != null) {
                 
                 //ok here  will be the counter
                 if(response.trim().isEmpty()){
@@ -158,15 +163,15 @@ public class Responder
                 }
                 
                 //The actual code to start this 
-                if(blankLines > 2){
+                if(blankLines >= 2){
                 throw new BlankLinesException(
                 "File contains not enough words"
                 );
             }
                 
                 
-                defaultResponses.add(response);
-                response = reader.readLine();
+                
+                
             }
         }
         catch(FileNotFoundException e) {

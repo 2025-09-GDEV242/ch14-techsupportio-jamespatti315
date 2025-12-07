@@ -30,4 +30,3 @@ We take Linux support very seriously. But there are some problems. Most have to 
 
 bluej
 Ahhh, BlueJ, yes. We tried to buy out those guys long ago, but they simply won't sell... Stubborn people they are. Nothing we can do about it, I'm afraid.
-
